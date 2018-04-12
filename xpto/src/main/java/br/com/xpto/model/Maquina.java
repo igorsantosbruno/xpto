@@ -1,25 +1,25 @@
 package br.com.xpto.model;
 
-public class Maquina {
+import java.io.Serializable;
+
+public class Maquina implements Serializable{
 	
+	private static final long serialVersionUID = 1L;
+
 	private String serial;
 	private String clienteHostname;
-	
+
 	public Maquina() {
-		
+
 		this.serial = "";
 		this.clienteHostname = "";
 	}
-	
-	
 
 	public Maquina(String serial, String clienteHostname) {
-		
+
 		this.serial = serial;
 		this.clienteHostname = clienteHostname;
 	}
-
-
 
 	public String getSerial() {
 		return serial;

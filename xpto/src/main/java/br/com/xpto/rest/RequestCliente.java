@@ -15,19 +15,15 @@ import org.apache.http.util.EntityUtils;
 
 import com.google.gson.Gson;
 
+import br.com.xpto.model.CadastroComponente;
 import br.com.xpto.model.Maquina;
-
-/* Tarefa 1 obter o id da empresa que está atrelada a máquina
- * 
- * 
- * 
- * */
 
 public class RequestCliente {
 
 	private final String hostWebService = "http://localhost:8080/xptoservice";
 	private final String requestObterIdEmpresa = "/maquina/verficarExistenciaMaquina?serial=";
-	private final String requestInsereMaquina = "/maquina/cadastrarMaquina"; 
+	private final String requestInsereMaquina = "/maquina/cadastrarMaquina";
+	private final String requestCadastroInicial = "/maquina/cadastroInicial";
 
 	public boolean verificaExistenciaMaquina(String serial) {
 
@@ -62,7 +58,7 @@ public class RequestCliente {
 		
 		HttpClient httpClient = new DefaultHttpClient();
         Gson gson = new Gson();
-        HttpPost request = new HttpPost(hostWebService + requestInsereMaquina);
+        HttpPost request = new HttpPost(this.hostWebService + this.requestInsereMaquina);
         StringEntity params = null;
 		try {
 			params = new StringEntity(gson.toJson(maquina));
@@ -72,6 +68,31 @@ public class RequestCliente {
 		}
         request.addHeader("content-type","application/json");
         request.addHeader("Accept","application/json");
+        request.setEntity(params);
+        try {
+        	//void
+			httpClient.execute(request);
+			return true;
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}finally {
+			
+			httpClient.getConnectionManager().shutdown();
+		}
+        return false;
+	}
+	
+	public boolean cadastroInicial(CadastroComponente cadastroComponente) {
+		
+		HttpClient httpClient = new DefaultHttpClient();
+        Gson gson = new Gson();
+        HttpPost request = new HttpPost(this.hostWebService + this.requestCadastroInicial);
+        StringEntity params = null;
+		params = new StringEntity(gson.toJson(cadastroComponente),"UTF-8");
+        request.addHeader("content-type","application/json");
+        request.addHeader("Accept","application/json");
+        request.setHeader("Content-Type", "application/json;charset=UTF-8");
         request.setEntity(params);
         try {
         	//void

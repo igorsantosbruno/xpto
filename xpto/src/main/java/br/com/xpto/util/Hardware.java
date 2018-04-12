@@ -65,13 +65,13 @@ public class Hardware {
 
 		return this.baseboard.getModel();
 	}
-
+	
 	// CPU info:
 	public String obterDescricaoCPU() {
 
 		return this.processor.toString();
 	}
-
+	
 	public String obterQuantidadeCPUFisica() {
 
 		return "" + this.processor.getPhysicalProcessorCount();
@@ -91,7 +91,8 @@ public class Hardware {
 
 		return this.processor.getProcessorID();
 	}
-
+	
+	// -------- Inicio CPU info a ser monitorada --------
 	public String obterConsumoCPU() {
 
 		DecimalFormat df = new DecimalFormat("0.#");
@@ -105,7 +106,8 @@ public class Hardware {
 		String cpuTemperatura = df.format(this.sensors.getCpuTemperature());
 		return cpuTemperatura;
 	}
-
+	// -------- FIM -------- 
+	
 	public List<String> obterProcessos() {
 
 		List<OSProcess> procs = Arrays.asList(os.getProcesses(5, ProcessSort.CPU));
@@ -121,7 +123,7 @@ public class Hardware {
 
 	// RAM info:
 	public String obterTotalRAM() {
-
+		
 		return FormatUtil.formatBytes(memory.getTotal());
 	}
 
