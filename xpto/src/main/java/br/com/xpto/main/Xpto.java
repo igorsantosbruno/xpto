@@ -4,9 +4,14 @@ import java.net.InetAddress;
 import java.net.UnknownHostException;
 
 import br.com.xpto.model.Cadastro;
+import br.com.xpto.parameter.Main;
+import br.com.xpto.parameter.ParameterCPU;
+import br.com.xpto.parameter.ParameterHD;
+import br.com.xpto.parameter.ParameterRAM;
 import br.com.xpto.rest.RequestCliente;
 import br.com.xpto.util.Hardware;
 import br.com.xpto.util.SistemaOperacional;
+import java.lang.Runnable;
 
 //Igor
 //Tarefa 1:
@@ -73,4 +78,6 @@ public class Xpto {
 				so.obterArquitetura(), so.obterDescricao(), so.obterNomeDeUsuarioLogado());
 		rc.cadastro(cadastro);
 	}
+
 }
+
