@@ -128,7 +128,7 @@ public class Hardware {
 	}
 
 	public String obterTotalDisponivelRAM() {
-
+		
 		return FormatUtil.formatBytes(memory.getAvailable());
 	}
 

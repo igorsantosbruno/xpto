@@ -15,20 +15,18 @@ import org.apache.http.util.EntityUtils;
 
 import com.google.gson.Gson;
 
-import br.com.xpto.model.CadastroComponente;
-import br.com.xpto.model.Maquina;
+import br.com.xpto.model.Cadastro;
 
 public class RequestCliente {
 
 	private final String hostWebService = "http://localhost:8080/xptoservice";
-	private final String requestObterIdEmpresa = "/maquina/verficarExistenciaMaquina?serial=";
-	private final String requestInsereMaquina = "/maquina/cadastrarMaquina";
-	private final String requestCadastroInicial = "/maquina/cadastroInicial";
+	private final String requestRetornaExistenciaMaquina = "/maquina/retornaExistenciaMaquina?serial=";
+	private final String requestCadastro = "/maquina/cadastro";
 
-	public boolean verificaExistenciaMaquina(String serial) {
+	public String retornaExistenciaMaquina(String serial) {
 
 		HttpClient httpClient = new DefaultHttpClient();
-		HttpGet request = new HttpGet(this.hostWebService + this.requestObterIdEmpresa + serial);
+		HttpGet request = new HttpGet(this.hostWebService + this.requestRetornaExistenciaMaquina + serial);
 		request.addHeader("content-type", "application/json");
 		request.addHeader("Accept", "application/json");
 		HttpResponse response = null;
@@ -41,9 +39,9 @@ public class RequestCliente {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		String json = "";
+		String resposta = "";
 		try {
-			json = EntityUtils.toString(response.getEntity());
+			resposta = EntityUtils.toString(response.getEntity());
 		} catch (ParseException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -51,45 +49,16 @@ public class RequestCliente {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		return json.equals("true");
+		return resposta;
 	}
 	
-	public boolean insereMaquina(Maquina maquina) {
+	public boolean cadastro(Cadastro cadastro) {
 		
 		HttpClient httpClient = new DefaultHttpClient();
         Gson gson = new Gson();
-        HttpPost request = new HttpPost(this.hostWebService + this.requestInsereMaquina);
+        HttpPost request = new HttpPost(this.hostWebService + this.requestCadastro);
         StringEntity params = null;
-		try {
-			params = new StringEntity(gson.toJson(maquina));
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-        request.addHeader("content-type","application/json");
-        request.addHeader("Accept","application/json");
-        request.setEntity(params);
-        try {
-        	//void
-			httpClient.execute(request);
-			return true;
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}finally {
-			
-			httpClient.getConnectionManager().shutdown();
-		}
-        return false;
-	}
-	
-	public boolean cadastroInicial(CadastroComponente cadastroComponente) {
-		
-		HttpClient httpClient = new DefaultHttpClient();
-        Gson gson = new Gson();
-        HttpPost request = new HttpPost(this.hostWebService + this.requestCadastroInicial);
-        StringEntity params = null;
-		params = new StringEntity(gson.toJson(cadastroComponente),"UTF-8");
+		params = new StringEntity(gson.toJson(cadastro),"UTF-8");
         request.addHeader("content-type","application/json");
         request.addHeader("Accept","application/json");
         request.setHeader("Content-Type", "application/json;charset=UTF-8");
