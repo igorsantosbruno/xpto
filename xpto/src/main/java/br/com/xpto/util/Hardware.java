@@ -100,11 +100,13 @@ public class Hardware {
 		return cpuConsumo;
 	}
 
-	public String obterTemperaturaProcessador() {
-
-		DecimalFormat df = new DecimalFormat("0.#");
-		String cpuTemperatura = df.format(this.sensors.getCpuTemperature());
-		return cpuTemperatura;
+	public void obterTemperaturaProcessador() {
+		double cpuTemperatura = (this.sensors.getCpuTemperature());
+		if (cpuTemperatura > 80) {
+			System.out.println(cpuTemperatura + " - Aquecendo!");
+		} else {
+			System.out.println(cpuTemperatura + "ºC - OK");
+		}
 	}
 	// -------- FIM -------- 
 	
@@ -130,6 +132,18 @@ public class Hardware {
 	public String obterTotalDisponivelRAM() {
 		
 		return FormatUtil.formatBytes(memory.getAvailable());
+	}
+	public void obterRamEmUsoPorcentagem() {
+		float ramTotal = (float) memory.getSwapTotal();
+		float ramDisponivel = (float) memory.getAvailable();
+		float ramUtilizada = (ramTotal / ramDisponivel) * 100;
+		DecimalFormat fmt = new DecimalFormat("0");
+		String str = fmt.format(ramUtilizada);
+		if (ramUtilizada >= 80) {
+			System.out.println(str + "%" + " - RAM com pouco espaço");
+		} else {
+			System.out.println(str + "%" + " - Ok");
+		}
 	}
 
 	// HD info:

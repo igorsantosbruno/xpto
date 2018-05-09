@@ -5,9 +5,7 @@ import java.net.UnknownHostException;
 
 import br.com.xpto.model.Cadastro;
 import br.com.xpto.parameter.Main;
-import br.com.xpto.parameter.ParameterCPU;
 import br.com.xpto.parameter.ParameterHD;
-import br.com.xpto.parameter.ParameterRAM;
 import br.com.xpto.rest.RequestCliente;
 import br.com.xpto.util.Hardware;
 import br.com.xpto.util.SistemaOperacional;

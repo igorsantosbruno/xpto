@@ -1,3 +1,4 @@
+/*
 package teste;
 
 import java.util.List;
@@ -43,3 +44,4 @@ public class TesteGeral {
 		discos.forEach(disco -> System.out.println(disco));
 	}
 }
+*/

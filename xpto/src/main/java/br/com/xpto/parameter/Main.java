@@ -1,6 +1,6 @@
 package br.com.xpto.parameter;
 
-import java.lang.Runnable;
+import br.com.xpto.util.Hardware;
 
 public class Main {
 
@@ -11,15 +11,15 @@ public class Main {
 				@Override
 				public void run() {
 					// Informação do HD
-					ParameterHD HD = new ParameterHD();
-					HD.obterInfoHD();
+					ParameterHD hd = new ParameterHD();
+					hd.obterInfoHD();
 
 					// Informação da RAM
-					ParameterRAM Ram = new ParameterRAM();
+					Hardware Ram = new Hardware();
 					Ram.obterRamEmUsoPorcentagem();
 					
 					// Informação CPU
-					ParameterCPU Cpu = new ParameterCPU();
+					Hardware Cpu = new Hardware();
 					Cpu.obterTemperaturaProcessador();
 				}
 			}).start();
