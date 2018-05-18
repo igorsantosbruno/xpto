@@ -1,15 +1,10 @@
 package br.com.xpto.main;
 
-import java.net.InetAddress;
-import java.net.UnknownHostException;
-
 import br.com.xpto.model.Cadastro;
-import br.com.xpto.parameter.Main;
-import br.com.xpto.parameter.ParameterHD;
+import br.com.xpto.model.GravarMonitoramento;
 import br.com.xpto.rest.RequestCliente;
 import br.com.xpto.util.Hardware;
 import br.com.xpto.util.SistemaOperacional;
-import java.lang.Runnable;
 
 //Igor
 //Tarefa 1:
@@ -43,7 +38,7 @@ import java.lang.Runnable;
 
 public class Xpto {
 
-	public static void main(String[] args) {
+	public static void main(String[] args) throws InterruptedException {
 
 		Hardware hardware = new Hardware();
 		RequestCliente rc = new RequestCliente();
@@ -56,10 +51,13 @@ public class Xpto {
 
 		case "null":
 			cadastro();
+			envioInfoHardware();
 			break;
 		default:
 			// inicia
 			System.out.println("Inicia");
+			envioInfoHardware();
+
 			break;
 		}
 	}
@@ -77,5 +75,26 @@ public class Xpto {
 		rc.cadastro(cadastro);
 	}
 
-}
+	public static void envioInfoHardware() throws InterruptedException {
 
+		while (true) {
+			new Thread(new Runnable() {
+				@Override
+				public void run() {
+					Hardware hardware = new Hardware();
+					System.out.println(hardware.obterCodigoCPU());
+					System.out.println(hardware.retornaPercentualRamUtilizado());
+					System.out.println(hardware.retornaTemperaturaProcessador());
+					GravarMonitoramento monitoramento = new GravarMonitoramento(
+							hardware.retornaTemperaturaProcessador(), hardware.retornaPercentualRamUtilizado(),
+							hardware.obterCodigoCPU(), hardware.retornaDiscos());
+					RequestCliente rc = new RequestCliente();
+					rc.gravarMonitoramento(monitoramento);
+					// Post
+				}
+
+			}).start();
+			Thread.sleep(10000);
+		}
+	}
+}

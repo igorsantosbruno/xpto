@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import br.com.xpto.model.MonitoramentoHd;
 import oshi.SystemInfo;
 import oshi.hardware.Baseboard;
 import oshi.hardware.CentralProcessor;
@@ -65,13 +66,13 @@ public class Hardware {
 
 		return this.baseboard.getModel();
 	}
-	
+
 	// CPU info:
 	public String obterDescricaoCPU() {
 
 		return this.processor.toString();
 	}
-	
+
 	public String obterQuantidadeCPUFisica() {
 
 		return "" + this.processor.getPhysicalProcessorCount();
@@ -91,7 +92,7 @@ public class Hardware {
 
 		return this.processor.getProcessorID();
 	}
-	
+
 	// -------- Inicio CPU info a ser monitorada --------
 	public String obterConsumoCPU() {
 
@@ -100,16 +101,20 @@ public class Hardware {
 		return cpuConsumo;
 	}
 
-	public void obterTemperaturaProcessador() {
-		double cpuTemperatura = (this.sensors.getCpuTemperature());
-		if (cpuTemperatura > 80) {
-			System.out.println(cpuTemperatura + " - Aquecendo!");
-		} else {
-			System.out.println(cpuTemperatura + "ºC - OK");
-		}
+	public String obterTemperaturaProcessador() {
+
+		DecimalFormat df = new DecimalFormat("0.#");
+		String cpuTemperatura = df.format(this.sensors.getCpuTemperature());
+		return cpuTemperatura;
 	}
-	// -------- FIM -------- 
-	
+
+	public double retornaTemperaturaProcessador() {
+
+		return this.sensors.getCpuTemperature();
+	}
+
+	// -------- FIM --------
+
 	public List<String> obterProcessos() {
 
 		List<OSProcess> procs = Arrays.asList(os.getProcesses(5, ProcessSort.CPU));
@@ -125,25 +130,23 @@ public class Hardware {
 
 	// RAM info:
 	public String obterTotalRAM() {
-		
+
 		return FormatUtil.formatBytes(memory.getTotal());
 	}
 
 	public String obterTotalDisponivelRAM() {
-		
+
 		return FormatUtil.formatBytes(memory.getAvailable());
 	}
-	public void obterRamEmUsoPorcentagem() {
+
+	public float retornaPercentualRamUtilizado() {
+
 		float ramTotal = (float) memory.getSwapTotal();
 		float ramDisponivel = (float) memory.getAvailable();
 		float ramUtilizada = (ramTotal / ramDisponivel) * 100;
 		DecimalFormat fmt = new DecimalFormat("0");
 		String str = fmt.format(ramUtilizada);
-		if (ramUtilizada >= 80) {
-			System.out.println(str + "%" + " - RAM com pouco espaço");
-		} else {
-			System.out.println(str + "%" + " - Ok");
-		}
+		return Float.parseFloat(str);
 	}
 
 	// HD info:
@@ -162,6 +165,25 @@ public class Hardware {
 					+ FormatUtil.formatBytes(disco.getTotalSpace()) + " / Total disponÃ­vel:"
 					+ FormatUtil.formatBytes(disco.getFreeSpace()));
 		}
+		return listaDisco;
+	}
+
+	public List<MonitoramentoHd> retornaDiscos() {
+
+		File[] discos = File.listRoots();
+		List<MonitoramentoHd> listaDisco = new ArrayList<>();
+		for (File disco : discos) {
+			if (disco.getTotalSpace() != 0) {
+			float SpaceUsed = (float) disco.getUsableSpace();
+			float SpaceTotal = (float) disco.getTotalSpace();
+			float resultado = (SpaceUsed / SpaceTotal) * 100;
+			DecimalFormat fmt = new DecimalFormat("0");
+			String str = fmt.format(resultado);
+			System.out.println(str);
+			listaDisco.add(new MonitoramentoHd(Float.parseFloat(str), disco.getAbsolutePath()));
+			}
+		}
+
 		return listaDisco;
 	}
 }

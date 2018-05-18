@@ -1,6 +1,5 @@
 package br.com.xpto.parameter;
 
-import br.com.xpto.util.Hardware;
 
 public class Main {
 
@@ -15,12 +14,13 @@ public class Main {
 					hd.obterInfoHD();
 
 					// Informação da RAM
-					Hardware Ram = new Hardware();
+					ParameterRAM Ram = new ParameterRAM();
 					Ram.obterRamEmUsoPorcentagem();
 					
 					// Informação CPU
-					Hardware Cpu = new Hardware();
+					ParameterCPU Cpu = new ParameterCPU();
 					Cpu.obterTemperaturaProcessador();
+					
 				}
 			}).start();
 			Thread.sleep(10000);
