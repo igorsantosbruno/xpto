@@ -143,7 +143,7 @@ public class Hardware {
 
 		float ramTotal = (float) memory.getSwapTotal();
 		float ramDisponivel = (float) memory.getAvailable();
-		float ramUtilizada = (ramTotal / ramDisponivel) * 100;
+		float ramUtilizada = (ramDisponivel / ramTotal) * 100;
 		DecimalFormat fmt = new DecimalFormat("0");
 		String str = fmt.format(ramUtilizada);
 		return Float.parseFloat(str);

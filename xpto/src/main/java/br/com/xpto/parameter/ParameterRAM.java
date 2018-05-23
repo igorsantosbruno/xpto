@@ -21,7 +21,7 @@ public class ParameterRAM {
 	public void obterRamEmUsoPorcentagem() {
 		float ramTotal = (float) memory.getSwapTotal();
 		float ramDisponivel = (float) memory.getAvailable();
-		float ramUtilizada = (ramTotal / ramDisponivel) * 100;
+		float ramUtilizada = (ramDisponivel / ramTotal) * 100;
 		DecimalFormat fmt = new DecimalFormat("0");
 		String str = fmt.format(ramUtilizada);
 		if (ramUtilizada >= 80) {
