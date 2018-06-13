@@ -141,11 +141,12 @@ public class Hardware {
 
 	public float retornaPercentualRamUtilizado() {
 
-		float ramTotal = (float) memory.getSwapTotal();
+		float ramTotal = (float) memory.getTotal();
 		float ramDisponivel = (float) memory.getAvailable();
-		float ramUtilizada = (ramDisponivel / ramTotal) * 100;
+		float ramUtilizada = (ramTotal - ramDisponivel);
+		float ramUsada = (ramUtilizada / ramTotal) * 100;
 		DecimalFormat fmt = new DecimalFormat("0");
-		String str = fmt.format(ramUtilizada);
+		String str = fmt.format(ramUsada);
 		return Float.parseFloat(str);
 	}
 
@@ -176,9 +177,9 @@ public class Hardware {
 			if (disco.getTotalSpace() != 0) {
 			float SpaceUsed = (float) disco.getUsableSpace();
 			float SpaceTotal = (float) disco.getTotalSpace();
-			float resultado = (SpaceUsed / SpaceTotal) * 100;
+			float percentualLivre = (SpaceUsed / SpaceTotal) * 100;
 			DecimalFormat fmt = new DecimalFormat("0");
-			String str = fmt.format(resultado);
+			String str = fmt.format(percentualLivre);
 			System.out.println(str);
 			listaDisco.add(new MonitoramentoHd(Float.parseFloat(str), disco.getAbsolutePath()));
 			}

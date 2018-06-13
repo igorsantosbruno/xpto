@@ -1,5 +1,7 @@
 package br.com.xpto.parameter;
 
+import br.com.xpto.rest.RequestCliente;
+import br.com.xpto.util.SistemaOperacional;
 import oshi.SystemInfo;
 import oshi.hardware.HardwareAbstractionLayer;
 import oshi.hardware.Sensors;
@@ -20,7 +22,9 @@ public class ParameterCPU {
 	public void obterTemperaturaProcessador() {
 		double cpuTemperatura = (this.sensors.getCpuTemperature());
 		if (cpuTemperatura > 80) {
-			System.out.println(cpuTemperatura + " - Aquecendo!");
+			RequestCliente rc = new RequestCliente();
+			SistemaOperacional so = new SistemaOperacional();
+			rc.enviarMensagemSlack(rc.retornaCanal(so.obterHostName()), cpuTemperatura + "ºC" + " Processador acima da temperatura estimada!");
 		} else {
 			System.out.println(cpuTemperatura + "ºC - OK");
 		}

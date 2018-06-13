@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 import br.com.xpto.model.MonitoramentoHd;
+import br.com.xpto.rest.RequestCliente;
+import br.com.xpto.util.SistemaOperacional;
 
 
 
@@ -27,7 +29,9 @@ public class ParameterHD {
 				String str = fmt.format(resultado);
 				String teste = str + "% " + disco.getAbsolutePath();
 				if (resultado < 10) {
-					System.out.println(teste + " - Espaço de armazenamento insuficiente");
+					RequestCliente rc = new RequestCliente();
+					SistemaOperacional so = new SistemaOperacional();
+					rc.enviarMensagemSlack(rc.retornaCanal(so.obterHostName()), teste + " Espaço de armazenamento do HD insuficiente");
 				} else {
 					System.out.println(teste + " - Espaço de armazenamento ok");
 				}
