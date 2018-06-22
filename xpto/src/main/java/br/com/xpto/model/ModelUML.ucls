@@ -3,7 +3,7 @@
   associations="true" dependencies="false" nesting-relationships="true" router="FAN">  
   <class id="1" language="java" name="br.com.xpto.model.GravarMonitoramento" project="xpto" 
     file="/xpto/src/main/java/br/com/xpto/model/GravarMonitoramento.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="297" width="351" x="114" y="-287"/>    
+    <position height="-1" width="-1" x="199" y="-137"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -12,7 +12,7 @@
   </class>  
   <class id="2" language="java" name="br.com.xpto.model.MonitoramentoHd" project="xpto" 
     file="/xpto/src/main/java/br/com/xpto/model/MonitoramentoHd.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="-1" width="-1" x="277" y="196"/>    
+    <position height="-1" width="-1" x="202" y="172"/>    
     <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
@@ -21,8 +21,8 @@
   </class>  
   <class id="3" language="java" name="br.com.xpto.model.Cadastro" project="xpto" 
     file="/xpto/src/main/java/br/com/xpto/model/Cadastro.java" binary="false" corner="BOTTOM_RIGHT">    
-    <position height="945" width="540" x="505" y="-287"/>    
-    <display autosize="true" stereotype="true" package="true" initial-value="false" signature="true" 
+    <position height="949" width="692" x="388" y="-288"/>    
+    <display autosize="false" stereotype="true" package="true" initial-value="false" signature="true" 
       sort-features="false" accessors="true" visibility="true">      
       <attributes public="true" package="true" protected="true" private="true" static="true"/>      
       <operations public="true" package="true" protected="true" private="true" static="true"/>    
@@ -39,8 +39,12 @@
   </class>  
   <association id="5">    
     <end type="SOURCE" refId="1" navigable="false">      
-      <attribute id="6" name="listaDisco"/>      
-      <multiplicity id="7" minimum="0" maximum="2147483647"/>    
+      <attribute id="6" name="listaDisco">        
+        <position height="0" width="0" x="-75" y="-24"/>      
+      </attribute>      
+      <multiplicity id="7" minimum="0" maximum="2147483647">        
+        <position height="0" width="0" x="-75" y="-24"/>      
+      </multiplicity>    
     </end>    
     <end type="TARGET" refId="2" navigable="true"/>    
     <display labels="true" multiplicity="true"/>  

@@ -67,7 +67,10 @@ public class Xpto {
 		Hardware hardware = new Hardware();
 		SistemaOperacional so = new SistemaOperacional();
 		RequestCliente rc = new RequestCliente();
-		Cadastro cadastro = new Cadastro(hardware.obterCodigoCPU(), so.obterHostName(), hardware.obterDataFabricao(),
+		String hostname = so.obterHostName();
+		if(hostname.contains("HSL"))
+			hostname = "HSL";
+		Cadastro cadastro = new Cadastro(hardware.obterCodigoCPU(), hostname, hardware.obterDataFabricao(),
 				hardware.obterFabricante(), hardware.obterModelo(), hardware.obterModeloEspecifico(),
 				hardware.obterCodigoCPU(), hardware.obterDescricaoCPU(), hardware.obterIdentificadorCPU(),
 				hardware.obterQuantidadeCPUFisica(), hardware.obterQuantidadeCPULogica(), hardware.obterTotalRAM(),
@@ -75,7 +78,7 @@ public class Xpto {
 		rc.cadastro(cadastro);
 	}
 
-	public static void envioInfoHardware() throws InterruptedException {
+/*public static void envioInfoHardware() throws InterruptedException {
 
 		while (true) {
 			new Thread(new Runnable() {
@@ -94,6 +97,36 @@ public class Xpto {
 				}
 
 			}).start();
+			Thread.sleep(10000);
+		}
+	}*/
+	public static void envioInfoHardware() throws InterruptedException {
+		for (;;) {
+			Thread thread = new Thread(new Runnable() {
+				@Override
+				public void run() {
+					for (;;) {
+						Hardware hardware = new Hardware();
+						System.out.println(hardware.obterCodigoCPU());
+						System.out.println(hardware.retornaPercentualRamUtilizado());
+						System.out.println(hardware.retornaTemperaturaProcessador());
+						GravarMonitoramento monitoramento = new GravarMonitoramento(
+								hardware.retornaTemperaturaProcessador(), hardware.retornaPercentualRamUtilizado(),
+								hardware.obterCodigoCPU(), hardware.retornaDiscos());
+						RequestCliente rc = new RequestCliente();
+						rc.gravarMonitoramento(monitoramento);
+						// Post
+						try {
+							Thread.sleep(10000);
+						} catch (InterruptedException e) {
+							return;
+						}
+					}
+				}
+				
+			});
+			thread.start();
+			thread.join();
 			Thread.sleep(10000);
 		}
 	}

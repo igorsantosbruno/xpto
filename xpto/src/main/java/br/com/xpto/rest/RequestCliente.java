@@ -20,7 +20,7 @@ import br.com.xpto.model.Slack;
 
 public class RequestCliente {
 
-	private final String hostWebService = "http://localhost:8080/xptoservice";
+	private final String hostWebService = "https://xptows.herokuapp.com/xptoservice";
 	private final String requestRetornaExistenciaMaquina = "/maquina/retornaExistenciaMaquina?serial=";
 	private final String requestCadastro = "/maquina/cadastro";
 	private final String requestGravarMonitoramento = "/maquina/gravarMonitoramento";
